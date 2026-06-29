@@ -47,6 +47,8 @@ Instructions:
 """
 
     response = llm.invoke(prompt)
+    print("💬 Response Agent: Response generated.")
+    print(response.content)
 
     state["answer"] = response.content
 

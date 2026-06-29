@@ -1,3 +1,5 @@
+import code
+
 import pandas as pd
 
 from models.llm import llm
@@ -47,6 +49,22 @@ impact
 urgency
 state
 
+Column Values
+
+state:
+Open
+Closed
+Resolved
+
+priority:
+P1
+P2
+P3
+
+category:
+Network
+Software
+
 IMPORTANT:
 - Column names are case-insensitive.
 - Convert all column names to lowercase before using them.
@@ -88,6 +106,9 @@ Now answer:
     response = llm.invoke(prompt)
 
     code = response.content.strip()
+    print("="*80)
+    print(code)
+    print("="*80)
 
     local_scope = {
         "df": df
@@ -96,8 +117,13 @@ Now answer:
     try:
 
         exec(code, {}, local_scope)
+        
+        print("COLUMNS:")
+        print(df.columns.tolist())
 
         result = local_scope["result"]
+        print("RESULT:")
+        print(result)
 
     except Exception as e:
 

@@ -14,6 +14,20 @@ def load_dataframe():
 
 def csv_loader_agent(state):
     df = load_dataframe()
+    df.columns = (
+        df.columns
+        .str.strip()
+        .str.lower()
+        .str.replace(" ", "_")
+    )
+
+    for col in df.select_dtypes(include="object").columns:
+        df[col] = (
+            df[col]
+            .astype(str)
+            .str.strip()
+            .str.lower()
+        )
 
     state["dataframe"] = df
 
